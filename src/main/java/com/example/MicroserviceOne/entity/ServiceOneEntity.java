@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class ServiceOneEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    private String serviceName="microservice-two";
+    private String serviceName="Microservice 1";
 
     //extra fields
     private String requestTime;

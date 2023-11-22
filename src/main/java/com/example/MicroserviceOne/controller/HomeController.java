@@ -17,10 +17,18 @@ public class HomeController {
     }
 
 
-    @GetMapping("/save")
+    @GetMapping("/service-1")
     public String getPost(){
-        return "Festival -> Diwali , Dasara";
+//        double doubleValue = Double.parseDouble("stringValue");
+        return "Microservice 1 running successfully";
+
     }
+
+
+
+
+
+
 //    public Mono<String> getMessage () {
 //            // Simulate processing to retrieve a message (replace this with your actual logic)
 //            String retrievedMessage = "Hello, this is the retrieved message!";
