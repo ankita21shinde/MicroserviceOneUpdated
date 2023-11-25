@@ -1,13 +1,23 @@
 package com.example.MicroserviceOne.controller;
 
 
+//import com.example.MicroserviceOne.entity.ServiceOneDto;
+import com.example.MicroserviceOne.entity.ServiceOneEntity;
+import com.example.MicroserviceOne.repo.ServiceRepo;
+import com.example.MicroserviceOne.service.ServiceTwoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
 public class HomeController {
+
+    @Autowired
+    private ServiceRepo serviceRepo;
+
+    @Autowired
+    private ServiceTwoImpl serviceTwo;
 
     @Autowired
     private WebClient webClient;
@@ -16,7 +26,27 @@ public class HomeController {
         this.webClient = webClientBuilder.baseUrl("http://localhost:8083").build();
     }
 
+ //To Audit the query parameter
+    @PostMapping("/create-service1")
+    public ResponseEntity<String> create(@RequestParam (required = false)String name) {
 
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Query parameter 'queryParameter' is required.");
+        }
+//        ServiceOneEntity savedEntity = serviceTwo.save(serviceOneDto);
+//      ServiceOneDto savedEntityDTO = serviceTwo.convertEntityToDTO(savedEntity);
+
+
+        // Create a new User entity
+        ServiceOneEntity serviceOneEntity=new ServiceOneEntity();
+       serviceOneEntity.setQueryParameter(name);
+
+       // Save the user to the database
+//        serviceRepo.save(serviceOneEntity);
+
+        // Return a success message
+        return ResponseEntity.ok("User created successfully");
+    }
     @GetMapping("/service-1")
     public String getPost(){
 //        double doubleValue = Double.parseDouble("stringValue");
@@ -25,6 +55,14 @@ public class HomeController {
     }
 
 
+
+
+
+
+
+
+
+    }
 
 
 
@@ -51,7 +89,7 @@ public class HomeController {
 //        // Process the request in Microservice 1
 //        // ...
 
-    // Audit information
+// Audit information
 
 //        AuditData auditData = new AuditData("Microservice 1", "/process-request", "POST", requestData, null);
 //
@@ -62,4 +100,3 @@ public class HomeController {
 //                .retrieve()
 //                .bodyToMono(String.class);
 //    }
-    }

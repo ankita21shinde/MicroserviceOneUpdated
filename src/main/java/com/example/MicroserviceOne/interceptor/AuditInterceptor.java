@@ -1,6 +1,4 @@
 package com.example.MicroserviceOne.interceptor;
-
-
 import com.example.MicroserviceOne.entity.ServiceOneEntity;
 import com.example.MicroserviceOne.repo.ServiceRepo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +16,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.UUID;
@@ -32,7 +31,6 @@ public class AuditInterceptor implements HandlerInterceptor {
 
 
     Date requestTime = new Date(); // Capture the current date and time
-
     private long startTime;
 
 
@@ -45,8 +43,6 @@ public class AuditInterceptor implements HandlerInterceptor {
         System.out.println("Request Time: " + dateFormat.format(requestTime));
         request.setAttribute("startTime", startTime);
         return true;
-
-
     }
 
     @Override
@@ -75,6 +71,8 @@ public class AuditInterceptor implements HandlerInterceptor {
             System.out.println(" error trace : " + errorStackTrace);
         }
 
+
+
         //for response
         ContentCachingResponseWrapper wrapper;
         if (response instanceof ContentCachingResponseWrapper) {
@@ -83,6 +81,18 @@ public class AuditInterceptor implements HandlerInterceptor {
             wrapper = new ContentCachingResponseWrapper(response);
         }
         String responseContent = getResponse(wrapper);
+
+
+
+        //To get Query parameter
+        String name = request.getParameter("name");
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Query parameter 'queryParameter' is required.");
+        }
+//        ServiceOneEntity serviceOneEntity = new ServiceOneEntity();
+            serviceOneEntity.setQueryParameter(name);
+            serviceOneEntity.setAuditTime(LocalDateTime.now());
+            serviceRepo.save(serviceOneEntity);
 
 
 
@@ -102,7 +112,7 @@ public class AuditInterceptor implements HandlerInterceptor {
 
       serviceRepo.save(serviceOneEntity);
 
-
+     //Perform web client
         WebClient webClient = WebClient.create();
         webClient.post()
                 .uri("http://localhost:8083/api/data")

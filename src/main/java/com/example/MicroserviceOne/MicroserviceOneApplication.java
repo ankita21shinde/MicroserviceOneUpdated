@@ -11,8 +11,10 @@ public class MicroserviceOneApplication {
 
 	@Bean
 	public WebClient webClient(){
+
 		return WebClient.builder().build();
 	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(MicroserviceOneApplication.class, args);
