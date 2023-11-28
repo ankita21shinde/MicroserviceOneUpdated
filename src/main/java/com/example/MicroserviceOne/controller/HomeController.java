@@ -5,14 +5,20 @@ package com.example.MicroserviceOne.controller;
 import com.example.MicroserviceOne.entity.ServiceOneEntity;
 import com.example.MicroserviceOne.repo.ServiceRepo;
 import com.example.MicroserviceOne.service.ServiceTwoImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
+//@Slf4j
 public class HomeController {
 
+
+//    private static final Logger logger= LoggerFactory.getLogger(HomeController.class);
     @Autowired
     private ServiceRepo serviceRepo;
 
@@ -50,19 +56,11 @@ public class HomeController {
     @GetMapping("/service-1")
     public String getPost(){
 //        double doubleValue = Double.parseDouble("stringValue");
+//        logger.info("In service -1");
         return "Microservice 1 running successfully";
 
     }
-
-
-
-
-
-
-
-
-
-    }
+}
 
 
 

@@ -11,6 +11,11 @@ public class ServiceTwoImpl implements ServiceTwo{
     @Autowired
     private ServiceRepo serviceRepo;
 
+    @Autowired
+    private ServiceOneEntity serviceOneEntity;
+
+
+
 //    public ServiceOneDto convertEntityToDTO(ServiceOneEntity serviceOneEntity) {
 //        ServiceOneDto serviceOneDto = new ServiceOneDto();
 //        serviceOneDto.setId(serviceOneEntity.getId());
@@ -58,8 +63,21 @@ public class ServiceTwoImpl implements ServiceTwo{
 
     @Override
     public ServiceOneEntity saveEntity(ServiceOneEntity serviceOneEntity) {
+
         return serviceRepo.save(serviceOneEntity);
     }
+
+
+
+    //To get ClientId from header
+    public void audit(String clientId) {
+        // Save the client ID to the database or perform other auditing logic
+        ServiceOneEntity serviceOneEntity = new ServiceOneEntity();
+        serviceOneEntity.setClientId(clientId);
+
+        serviceRepo.save(serviceOneEntity);
+    }
+
 
 
 //    @Override

@@ -61,6 +61,14 @@ public class AuditInterceptor implements HandlerInterceptor {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
+        // Get client ID from the header
+        String clientId = request.getHeader("client-id");
+        // Check if client ID is missing
+        if (clientId == null || clientId.isEmpty()) {
+            throw new IllegalArgumentException("Client ID is required in the request header");
+        }
+
+
         //for error trace
         String errorStackTrace = null;
         if (ex != null) {
@@ -70,6 +78,7 @@ public class AuditInterceptor implements HandlerInterceptor {
             errorStackTrace = sw.toString();
             System.out.println(" error trace : " + errorStackTrace);
         }
+
 
 
 
@@ -97,6 +106,7 @@ public class AuditInterceptor implements HandlerInterceptor {
 
 
         //for storing into database
+        serviceOneEntity.setClientId(clientId);
         serviceOneEntity.setRequestTime(dateFormat.format(requestTime));
         serviceOneEntity.setResponseTime(dateFormat.format(responseTime));
         serviceOneEntity.setStatusCode(response.getStatus());

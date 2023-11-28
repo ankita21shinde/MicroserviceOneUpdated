@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Component
 @Table(name = "serviceAuditing")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +17,8 @@ import java.time.LocalDateTime;
 public class ServiceOneEntity {
     private String queryParameter;
     private LocalDateTime auditTime;
+    private String clientId;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
