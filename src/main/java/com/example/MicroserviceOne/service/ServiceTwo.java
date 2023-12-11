@@ -4,5 +4,4 @@ import com.example.MicroserviceOne.entity.ServiceOneEntity;
 
 public interface ServiceTwo {
     public ServiceOneEntity saveEntity(ServiceOneEntity serviceOneEntity);
-
 }

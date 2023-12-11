@@ -18,14 +18,10 @@ public class ServiceOneEntity {
     private String queryParameter;
     private LocalDateTime auditTime;
     private String clientId;
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-
     private String serviceName="Microservice 1";
-
     //extra fields
     private String requestTime;
     private String responseTime;
